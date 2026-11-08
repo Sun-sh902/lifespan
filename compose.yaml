@@ -1,0 +1,16 @@
+services:
+  lifespan:
+    build: .
+    container_name: lifespan
+    restart: unless-stopped
+    ports:
+      - "4747:4747"
+    volumes:
+      - ./data:/data
+    environment:
+      # Host names you will use to reach Lifespan. Protects against DNS rebinding.
+      # LIFESPAN_ALLOWED_HOSTS: "lifespan.home.arpa,192.168.1.20"
+      # Optional push reminders (Discord, Slack, ntfy or any JSON webhook).
+      # LIFESPAN_WEBHOOK_URL: "https://ntfy.sh/your-private-topic"
+      # LIFESPAN_REMIND_DAYS: "14"
+      TZ: "UTC"

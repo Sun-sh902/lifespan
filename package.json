@@ -1,0 +1,35 @@
+{
+  "name": "lifespan",
+  "version": "1.0.0",
+  "description": "Self-hosted home inventory that tracks every warranty, receipt, manual and write-off date for the things you own.",
+  "type": "module",
+  "private": true,
+  "license": "MIT",
+  "author": "Sun Spark",
+  "homepage": "https://github.com/Sun-sh902/lifespan#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Sun-sh902/lifespan.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Sun-sh902/lifespan/issues"
+  },
+  "keywords": [
+    "self-hosted",
+    "warranty",
+    "home-inventory",
+    "receipts",
+    "sqlite",
+    "no-dependencies"
+  ],
+  "engines": {
+    "node": ">=22.13"
+  },
+  "scripts": {
+    "start": "node server/index.js",
+    "dev": "node --watch server/index.js",
+    "seed": "node scripts/seed.js",
+    "test": "node --test --test-reporter=spec \"test/*.test.js\"",
+    "acceptance": "node scripts/acceptance.js"
+  }
+}

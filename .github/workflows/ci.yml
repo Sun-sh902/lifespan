@@ -1,0 +1,44 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    name: Node ${{ matrix.node }}
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        node: ['22.x', '24.x']
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node }}
+      - name: Unit and API tests
+        run: npm test
+      - name: End-to-end acceptance
+        run: npm run acceptance
+
+  docker:
+    name: Docker image
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build
+        run: docker build -t lifespan:ci .
+      - name: Smoke test
+        run: |
+          docker run -d --name lifespan -p 4747:4747 lifespan:ci
+          for i in $(seq 1 30); do
+            if curl -fsS http://127.0.0.1:4747/api/health; then exit 0; fi
+            sleep 1
+          done
+          docker logs lifespan
+          exit 1
